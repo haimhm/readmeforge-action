@@ -56,9 +56,11 @@ jobs:
 
 | | Free | Pro ($9/mo) |
 |---|---|---|
-| Public repos | ✅ 20 syncs/month | ✅ 1000 syncs/month |
-| Private repos | ❌ | ✅ |
-| `mode: commit` (auto-merge) | ❌ | ✅ |
+| Public repos | 20 syncs/month | 1000 syncs/month |
+| Private repos | No | Yes |
+| `mode: commit` (direct commit) | No | Yes |
+
+Direct-commit mode is enforced server-side: the API only returns the synced README for `mode: commit` when the license key verifies as Pro, and the Action refuses to push directly unless the server confirms the Pro tier. Free users calling the API with `mode: commit` get a `commit_mode_requires_pro` error.
 
 Free tier needs no key at all. For Pro, buy a license on Gumroad, then add it
 as a repository secret named `READMEFORGE_LICENSE_KEY` and pass it via the
