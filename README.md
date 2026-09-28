@@ -25,13 +25,13 @@ jobs:
         with:
           fetch-depth: 0   # required: the Action diffs against the previous commit
 
-      - uses: YOUR_ORG/readmeforge-action@v1
+      - uses: haimhm/readmeforge-action@v1
         with:
           mode: pr   # or 'commit' (Pro)
           # license-key: ${{ secrets.READMEFORGE_LICENSE_KEY }}  # Pro only
 ```
 
-> Replace `YOUR_ORG/readmeforge-action@v1` with the published Action reference
+> Replace `haimhm/readmeforge-action@v1` with the published Action reference
 > once it is released on the GitHub Marketplace.
 
 ## Inputs
