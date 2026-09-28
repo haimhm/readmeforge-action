@@ -96,9 +96,9 @@ runs:
           --arg repo "$RF_REPO" \
           --arg visibility "$VISIBILITY" \
           --arg diff "$DIFF" \
-          --arg readme "$README_CONTENT" \
+          --arg readme "$README_CONTENT" --arg mode "$MODE" \
           --arg license_key "$RF_LICENSE_KEY" \
-          '{repo:$repo, visibility:$visibility, diff:$diff, readme:$readme} +
+          '{repo:$repo, visibility:$visibility, diff:$diff, readme:$readme, mode:$mode} +
            (if $license_key == "" then {} else {license_key:$license_key} end)')"
 
         RESPONSE="$(curl -sS -m 180 -X POST "$API_URL" \
@@ -112,7 +112,7 @@ runs:
           exit 1
         fi
 
-        TIER="$(echo "$RESPONSE" | jq -r '.tier')"
+        TIER="$(echo "$RESPONSE" | jq -r '.tier')"; if [[ "$MODE" == "commit" && "$TIER" != "pro" ]]; then echo "::error::mode 'commit' requires a Pro license (server tier: '$TIER'). Add your license key or use mode 'pr'."; exit 1; fi
         echo "$RESPONSE" | jq -r '.readme' > "$README_PATH"
         echo "Changelog:"
         echo "$RESPONSE" | jq -r '.changelog[]? | "- \(.)"'
